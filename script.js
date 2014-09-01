@@ -1,4 +1,4 @@
-// Slideset plugin
+// Multi Slide Slider plugin
 // Using Twitter Bootstrap JavaScript Framework
 !function ($) {
 
@@ -6,17 +6,17 @@
 	
 	var resizeTimer;
 
-	// SLIDESET CLASS DEFINITION
-	// =========================
+	// MULTI SLIDE SLIDER CLASS DEFINITION
+	// ===================================
 
-	var Slideset = function (element) {
+	var MultiSlider = function (element) {
 		this.$element = $(element)
-		this.$slideSetInner   = this.$element.find('.slideset-inner')
-		this.$slideSetItems   = this.$element.find('.slideset-items')
+		this.$multiSlideInner = this.$element.find('.multislide-inner')
+		this.$multiSlideItems = this.$element.find('.multislide-items')
 		this.$item            = this.$element.find('.item')
-		this.$controlLeft	  = this.$element.find('.slideset-control.left')
-		this.$controlRight	  = this.$element.find('.slideset-control.right')
-		this.slideSetItemsW   = 0
+		this.$controlLeft	  = this.$element.find('.multislide-control.left')
+		this.$controlRight	  = this.$element.find('.multislide-control.right')
+		this.multiSlideItemsW = 0
 		this.slideHorizMargin = 0
 		this.totalSlides      = 0
 		this.currentSlide     = 0
@@ -25,11 +25,11 @@
 		this.offsetAdjRight   = 0;
 	}
 	
-	Slideset.prototype.init = function() {
+	MultiSlider.prototype.init = function() {
 		var slideHorizMargin = parseInt(this.$item.css('margin-left'), 10),
 			that = this;
 		
-		this.$slideSetItems.css('width', 0);
+		this.$multiSlideItems.css('width', 0);
 			
 		this.$item.each(function () {
 			var $this = $(this);
@@ -37,31 +37,31 @@
 			$this.data( 'slideNum', that.totalSlides );
 			that.slides[that.totalSlides++] = $this;
 			that.slideWidths[$this.data('slideNum')] = $this.width();
-			that.slideSetItemsW = that.$slideSetItems.width() + $this.width() + that.slideHorizMargin*2;
-			that.$slideSetItems.width( that.slideSetItemsW );
+			that.multiSlideItemsW = that.$multiSlideItems.width() + $this.width() + that.slideHorizMargin*2;
+			that.$multiSlideItems.width( that.multiSlideItemsW );
 			
 		})
 			
 		this.setButtonStates(); 
 	}
 	
-	Slideset.prototype.moveLeft = function() {
+	MultiSlider.prototype.moveLeft = function() {
 		if ( this.currentSlide == 0 ) return;
 		if ( this.slideWidths[this.currentSlide-1] == undefined ) return;
 		
 		var currentSlideW  = this.slideWidths[this.currentSlide],
-			slideSetInnerW = this.$slideSetInner.width(),
-			slideSetLeft   = parseInt(this.$slideSetItems.css('left'), 10),
+			multiSlideInnerW = this.$multiSlideInner.width(),
+			multiSlideLeft   = parseInt(this.$multiSlideItems.css('left'), 10),
 			that           = this,
 			offset;
 		
-		if (slideSetLeft !== slideSetInnerW - this.slideSetItemsW) {
+		if (multiSlideLeft !== multiSlideInnerW - this.multiSlideItemsW) {
 			offset = this.slideWidths[this.currentSlide]/2 + this.slideHorizMargin*2 + this.slideWidths[this.currentSlide-1]/2;
 		} else {
 			offset = this.offsetAdjRight;
 		}
 		
-		this.$slideSetItems.animate( { left: '+=' + offset }, function() {
+		this.$multiSlideItems.animate( { left: '+=' + offset }, function() {
 			that.setButtonStates();  
 		});
 		this.currentSlide--;
@@ -69,23 +69,23 @@
 		return this
 	}
 	
-	Slideset.prototype.moveRight = function() {
+	MultiSlider.prototype.moveRight = function() {
 		if ( this.slideWidths[this.currentSlide+1] == undefined ) return;
 	
 		var currentSlideW  = this.slideWidths[this.currentSlide],
-			slideSetInnerW = this.$slideSetInner.width(),
-			slideSetLeft   = parseInt(this.$slideSetItems.css('left'), 10),
+			multiSlideInnerW = this.$multiSlideInner.width(),
+			multiSlideLeft   = parseInt(this.$multiSlideItems.css('left'), 10),
 			that           = this,
 			offset;
 			
-		if (currentSlideW < (this.slideSetItemsW + slideSetLeft - slideSetInnerW)) {
+		if (currentSlideW < (this.multiSlideItemsW + multiSlideLeft - multiSlideInnerW)) {
 			offset = currentSlideW/2 + this.slideHorizMargin*2 + this.slideWidths[this.currentSlide+1]/2;
 		} else {
-			offset = this.slideSetItemsW - slideSetInnerW + slideSetLeft;
+			offset = this.multiSlideItemsW - multiSlideInnerW + multiSlideLeft;
 			this.offsetAdjRight = offset;
 		}
 		
-		this.$slideSetItems.animate( { left: '-=' + offset }, function() {
+		this.$multiSlideItems.animate( { left: '-=' + offset }, function() {
 			that.setButtonStates();  
 		});
 		this.currentSlide++;
@@ -93,9 +93,9 @@
 		return this
 	}
 	
-	Slideset.prototype.setButtonStates = function() {
-		var slideSetInnerW = this.$slideSetInner.width(),
-			slideSetLeft   = parseInt(this.$slideSetItems.css('left'), 10);
+	MultiSlider.prototype.setButtonStates = function() {
+		var multiSlideInnerW = this.$multiSlideInner.width(),
+			multiSlideLeft   = parseInt(this.$multiSlideItems.css('left'), 10);
 			
 		if ( this.currentSlide == 0 ) {
 			this.$controlLeft.hide();
@@ -103,7 +103,7 @@
 			this.$controlLeft.show();
 		}
 	
-		if ( slideSetInnerW >= this.slideSetItemsW + slideSetLeft ) {
+		if ( multiSlideInnerW >= this.multiSlideItemsW + multiSlideLeft ) {
 			this.$controlRight.hide();
 		} else {
 			this.$controlRight.show();
@@ -112,13 +112,13 @@
 		return this
 	}
 	
-	Slideset.prototype.resize = function() {
-		var slideSetInnerW = this.$slideSetInner.width(),
-			slideSetLeft   = parseInt(this.$slideSetItems.css('left'), 10),
+	MultiSlider.prototype.resize = function() {
+		var multiSlideInnerW = this.$multiSlideInner.width(),
+			multiSlideLeft   = parseInt(this.$multiSlideItems.css('left'), 10),
 			that   = this;
 			
-		if ( slideSetInnerW >= this.slideSetItemsW + slideSetLeft ) {
-			that.$slideSetItems.css( 'left', 0 );
+		if ( multiSlideInnerW >= this.multiSlideItemsW + multiSlideLeft ) {
+			that.$multiSlideItems.css( 'left', 0 );
 			that.currentSlide = 0;
 		}
 		
@@ -127,32 +127,32 @@
 		return this
 	}
 
-	// SLIDESET PLUGIN DEFINITION
-	// ==========================
+	// MULTI SLIDE SLIDER PLUGIN DEFINITION
+	// ====================================
 
-	$.fn.slideset = function (option) {
+	$.fn.multislide = function (option) {
 		return this.each(function () {
 			var $this = $(this),
-				data = $this.data('naf.slideset');
-			if (!data) $this.data('naf.slideset', (data = new Slideset(this)));
+				data = $this.data('bs.multislide');
+			if (!data) $this.data('bs.multislide', (data = new MultiSlider(this)));
 			data.init();
 		})
 	};
 	
-	// SLIDESET DATA-API
-	// =================
+	// MULTI SLIDE SLIDER DATA-API
+	// ===========================
 	
-	$(document).on('click.naf.slideset.data-api', '[data-slideset]', function (e) {
+	$(document).on('click.bs.multislide.data-api', '[data-multislide]', function (e) {
 		var $this    = $(this), href,
 			$target  = $((href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')), //strip for ie7
-			whichWay = $this.data('slideset');
+			whichWay = $this.data('multislide');
 			
 		switch (whichWay) {
 			case 'left':
-				$target.data('naf.slideset').moveLeft();
+				$target.data('bs.multislide').moveLeft();
 				break;
 			case 'right':
-				$target.data('naf.slideset').moveRight();
+				$target.data('bs.multislide').moveRight();
 				break;
 			default:
 				break;
@@ -165,9 +165,9 @@
 	$(window).resize(function () {		
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(function () {
-			$('[data-ride="slideset"]').each(function () {
-				var $slideset = $(this);
-				$slideset.data('naf.slideset').resize();
+			$('[data-ride="multislide"]').each(function () {
+				var $multislide = $(this);
+				$multislide.data('bs.multislide').resize();
 			})
 		}, 50);
 	});
