@@ -2,48 +2,49 @@
 
 This plugin uses the Twitter Bootstrap JavaScript Framework.
 
-You will need to download and install the latest version of Bootstrap for it to work properly.
+You will need to download and install the latest version of Bootstrap and jQuery for it to work properly.
 
 Download Bootstrap at <http://getbootstrap.com>
+Download jQuery at <http://jquery.com>
 
 
 ## Usage
 
 Here is the basic HTML structure for the plugin:
 
-  <div id="multislide-example-generic" class="multislide" data-ride="multislide">
-    <div class="multislide-inner text-center">
-      <div class="multislide-items">
-        <div class="item slide1">
-          [slide]
-        </div>
-        <div class="item slide2">
-          [slide]
-        </div>
-        <div class="item slide3">
-          [slide]
-        </div>
-        <div class="item slide4">
-          [slide]
-        </div>
+<div id="multislide-example-generic" class="multislide" data-ride="multislide">
+  <div class="multislide-inner text-center">
+    <div class="multislide-items">
+      <div class="item slide1">
+        [slide]
       </div>
-      <a class="multislide-control left" href="#multislide-example-generic" role="button" data-multislide="left">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="multislide-control right" href="#multislide-example-generic" role="button" data-multislide="right">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
+      <div class="item slide2">
+        [slide]
+      </div>
+      <div class="item slide3">
+        [slide]
+      </div>
+      <div class="item slide4">
+        [slide]
+      </div>
     </div>
+    <a class="multislide-control left" href="#multislide-example-generic" role="button" data-multislide="left">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="multislide-control right" href="#multislide-example-generic" role="button" data-multislide="right">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
   </div>
+</div>
 
 The “multislide-example-generic” id can be changed but must be reflected in the mulislide-control links as well as when you initialize the plugin (see code below).
 
 
-Here the needed CSS styles for the plugin:
+Here are the needed CSS styles for the plugin:
 
 <style type="text/css">
   .multislide {
-    height: 200px;
+    height: 200px; /* adjust the height according to your needs */
   }
   .multislide-inner {
     float: left;
@@ -113,7 +114,7 @@ Here the needed CSS styles for the plugin:
   
   /* styles below should be customized to fit your needs */
   .multislide-items .item {
-    height: 200px;
+    height: 100%;
     width: 485px;
   }
   .slide1 {
